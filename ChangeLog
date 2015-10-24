@@ -1,0 +1,171 @@
+# ChangeLog for jmk-x11-fonts -*- text -*-
+# autodate: 1999-Aug-24 00:09
+
+v3.0: 1999-08-20
+
+  - Added two new font encodings for the Neep font family:
+  
+      ISO8859-9  (Latin5, Western European + Turkish)
+      ISO8859-15 (Latin9, Western European + Euro Symbol)
+
+  - Added a NEWS file, and moved the change history into its own
+    separate ChangeLog file.
+
+  - Quite a few X applications (notably Gimp and Netscape) pay no
+    attention whatsoever to the ADD_STYLE font field.  I consider that
+    broken behavior.  Unfortunately, to work around that, i've had to
+    abandon use of the ADD_STYLE field to indicate the font variants
+    with alternate ampersand glyphs.  Now, the regular variants have a
+    FAMILY_NAME of `Neep', and the alternate variants have a
+    FAMILY_NAME of `Neep Alt'.  See the NEWS file for info on dealing
+    with this change.
+
+  - Back in version 1.3, i changed the shape of the Neep-18 fonts from
+    a round shape to a relatively square one, chiefly because the bold
+    font looked ... well, they looked bad.  I have since discovered how
+    to make them look good.  :)  Hence, they are back to a (now
+    significantly more legible) round shape.  Now i'm even willing to
+    use them.  :)
+
+  - As a result of the item above, i also improved the bold weights of
+    the Neep-24 fonts and the Neep-9 fonts and both the regular and
+    bold weights of the Neep-14 fonts (i think these in particular look
+    much better).  Also made the shapes and centering of some glyphs
+    consistent across all sizes and weights of the Neep family.
+
+  - Removed the `13-point' (6x14) variants from the Neep family (the
+    ones with increased height for diacritical marks).  I didn't get
+    enough positive feedback about them, and i was tired of maintaining
+    two complete variants of the same font that were nearly alike.  See
+    the NEWS file for more info.
+
+  - The last release left out entries in fonts.alias for the neep-9
+    fonts.  Added them.  Thanks to Edgar Toernig <froese@gmx.de> for
+    pointing that out.
+
+v2.1: 1999-06-12
+
+  - Added 8-point (5x10) Neep font; now Neep can get even smaller.
+
+  - Added bold variant of neep-9 (5x11).  It's tough to properly do
+    boldface that small, but here's an attempt.  I'm not particularly
+    satisfied with it yet, but it's worth releasing.
+
+  - Tweaked glyphs in neep-9, partly due to the new bold variant.
+
+  - Added a `13-point' (6x14) set of Neep variants; this set gives
+    diacritical marks a bit more vertical space than the 6x13 font, so
+    that accented capital letters can extend closer to their full
+    height.  As a result, though, it also takes more vertical space in
+    general. This is an experimental font; feedback would be
+    appreciated.
+
+  - Added a set of 10-point (6x11) Modd fonts.
+
+  - Put Modd parts into a directory structure similar to that of Neep,
+    in preparation for more font encodings.  As a result, the filenames
+    of Modd fonts have changed.  Be sure you move the old `jmk' font
+    directory out of the way before installing, otherwise you'll end up
+    with conflicting fonts.
+
+v2.0: 1999-01-20
+
+  - Added ISO-8859-2 (Latin2) fonts.  Changed fonts.alias so that the
+    ISO-8859-1 (Latin1) fonts are called, e.g.,
+    `neep-iso8859-1-bold-12' instead of `neep-bold-12'.  `neep-bold-12'
+    is, by default, an alias for `neep-iso8859-1-bold-12'; by editing
+    fonts.alias before installing, you can make `neep-bold-12' point to
+    `neep-iso8859-2-bold-12' to use the ISO-8859-2 fonts by default, if
+    you use font aliases.
+  
+  - `NouveauGothic' has disappeared from fonts.alias, as a direct
+    result of the above.  If you want NouveauGothic aliases, you'll
+    have to maintain them yourself.
+
+  - Very minor tweaks to some characters.  Specificially: improvements
+    to characters with a cedilla in almost all sizes of Neep;
+    improvements to characters with a tilde in Neep-12 and
+    Neep-Bold-12.
+
+v1.3: 1998-12-22
+
+  - Changed the name of NouveauGothic to `Neep'.  I intended the font
+    to be mostly practical (i.e., compact but legible), but with some
+    aesthetic value.  `NouveauGothic' is just too damn long a name to
+    be considered practical---four letters is much more practical.
+    And, according to my (printed) edition of Webster's New Collegiate
+    Dictionary:
+    
+        neep, n. < Anglo-Saxon `næp'; (Scot. and Dial.) A turnip.
+
+    What could be more practical than a turnip?
+    
+    NOTE:  If you install the `fonts.alias' file, the old names will
+    still work.  They'll be phased out in a later release.
+
+    NOTE ALSO:  If you have a prior version of jmk-x11-fonts, you should
+    probably move the `jmk' font directory out of the way before
+    installing this version.  If you don't do so, you're likely to
+    create a bit of a mess.  If you upgrade using an RPM, you're in
+    good shape (it's one good reason to use packages like RPMs).
+
+  - Radically changed the shape of Neep-18 (the 10x20 font).  The
+    shape was too round and created jaggies on some characters.  The
+    new shape is more square, and i think it's more legible.
+    Constructive comments are welcome on this.
+
+  - Tweaked glyphs in Neep-9 (the 5x11 font).  Some glyphs weren't
+    properly centered in the character cell, and some accented
+    characters didn't have the proper shape.
+
+  - Tweaked a few glyphs in Modd and Modd-Bold; the accented `i' glyphs
+    still had an old serif on them.
+
+  - Still only ISO-8859-1 encoding.  Sorry ... i was in West Africa for
+    five weeks.  Next time.
+
+v1.2: 1998-10-13
+
+  - Added alternate set of NouveauGothic fonts which have a more
+    traditionally-shaped ampersand (&) character, for those who prefer
+    it.  The alternate fonts are installed alongside the regular ones
+    and are available via font aliases as, for example,
+    `nouveau-gothic-alt-12' or `nouveau-gothic-alt-bold-24'.  Thanks to
+    Alain Empain <alemp@br.fgov.be> for pointing out that folks don't
+    have the same typographical conventions everywhere.
+
+  - Changed the filenames of the 5x11, 6x11, 6x13, and 8x15 fonts to
+    use two digits in the XxY part of the filename (for example,
+    `nouveau-gothic-05x11.bdf') so that filenames sort properly without
+    user intervention.  This is something i should have done from the
+    beginning.  This change will probably require that you either move
+    the old font directory out of the way or remove it completely
+    before installing the new fonts.  Note that this change does *not*
+    affect the actual X11 font names, only the font filenames.
+
+  - Radically restructured the way the NouveauGothic fonts are built in
+    preparation for multiple font encodings down the road.
+
+v1.1: 1998-09-16
+
+  - Added Modd font family.
+  
+  - Added two new sizes to NouveauGothic: extra small (5x11 medium
+    weight only) and huge (12x24).
+
+  - Added tick marks to zero ('0') characters in medium weights of most
+    NouveauGothic sizes, to aid in differentiating from capital 'O'
+    characters.  Some bold weights (as well as the 5x11 medium weight)
+    don't have enough room for tick marks.
+
+v1.0.1: 1998-09-06
+
+    Fixed bug in nouveau-gothic-6x11.bdf where characters 251 and 252
+    were 1 pixel below the baseline.  Thanks to Edgar Toernig
+    <froese@gmx.de>.
+
+v1.0: 1998-08-31
+
+    Initial release.
+
+-------- End of document --------

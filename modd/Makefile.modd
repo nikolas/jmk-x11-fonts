@@ -1,0 +1,128 @@
+## Makefile.modd: how to build the modd BDF fonts from
+##                their various parts and make them installable
+## created 1999-Feb-13 jmk
+## autodate: 1999-Feb-14 03:45
+
+## NOTE:  This Makefile requires GNU make.
+
+SHELL=/bin/sh
+
+CP		= cp -f
+CAT		= cat
+ECHO		= echo
+ECHON		= echo -n
+ECHONE		= echo -ne
+RM		= rm -f
+SED		= sed
+TOUCH		= touch
+
+MAKEFILE_FONTS		= Makefile.fonts
+MAKEFILE_FONTS_IN	= $(MAKEFILE_FONTS).in
+
+ASCII_DIR	= ascii
+ISO8859_1_DIR	= iso8859-1-parts
+ISO8859_2_DIR	= iso8859-2-parts
+FONT_DIR	= .
+UTIL_DIR	= ..
+INSTALL_SRC_DIR	= ..
+
+CAT_FONTS	= $(UTIL_DIR)/cat-bdf-fonts.sh
+
+ADDSTYLE_REG	= -a ''
+ENC_ASCII	= -r US -e ASCII
+ENC_ISO8859_1	= -r ISO8859 -e 1
+ENC_ISO8859_2	= -r ISO8859 -e 2
+
+FONT		= modd
+
+SIZES		= \
+ 06x11 \
+ 06x11-bold \
+ 06x13 \
+ 06x13-bold
+
+ASCII_FONT	= \
+ $(ASCII_DIR)/$(FONT)-ascii-@SIZE@.bdf
+
+ISO8859_1_PARTS	= \
+ $(ISO8859_1_DIR)/$(FONT)-iso8859-1-part-@SIZE@.bdf
+
+ISO8859_1_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-1-@SIZE@.bdf
+
+ISO8859_2_PARTS	= \
+ $(ISO8859_2_DIR)/$(FONT)-iso8859-2-part-@SIZE@.bdf
+
+ISO8859_2_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-2-@SIZE@.bdf
+
+ASCII_FONTS	=#
+ISO8859_1_FONTS	=#
+ISO8859_2_FONTS	=#
+
+.PHONY: default makefiles Makefiles depend clean realclean
+.PHONY: ascii iso8859-1 iso8859-2 fonts
+
+default: makefiles
+	$(MAKE) fonts
+	$(MAKE) install
+
+makefiles:
+	$(CAT) /dev/null >$(MAKEFILE_FONTS)
+	$(ECHON) 'ASCII_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ASCII_FONT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_1_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_1_FONT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_2_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_2_FONT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(CAT) $(MAKEFILE_FONTS_IN) \
+		| $(SED) -e 's~@ASCII_FONT@~$(ASCII_FONT)~g' \
+			-e 's~@ISO8859_1_FONT@~$(ISO8859_1_FONT)~g' \
+			-e 's~@ISO8859_1_PARTS@~$(ISO8859_1_PARTS)~g' \
+			-e 's~@ISO8859_2_FONT@~$(ISO8859_2_FONT)~g' \
+			-e 's~@ISO8859_2_PARTS@~$(ISO8859_2_PARTS)~g' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	
+Makefiles: makefiles
+
+$(MAKEFILE_FONTS):
+	$(TOUCH) $@
+
+include $(MAKEFILE_FONTS)
+
+ascii: $(ASCII_FONTS)
+
+iso8859-1: $(ISO8859_1_FONTS)
+
+iso8859-2: $(ISO8859_2_FONTS)
+
+fonts: iso8859-1 #iso8859-2
+
+INSTALL_SRC_FONTS = \
+ $(ISO8859_1_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%) \
+# $(ISO8859_2_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%)
+
+install: $(INSTALL_SRC_FONTS)
+	
+$(INSTALL_SRC_DIR)/%: $(FONT_DIR)/%
+	$(CP) $< $@
+
+depend: makefiles
+
+realclean: clean
+	$(RM) $(MAKEFILE_FONTS) *~ make.LOG
+

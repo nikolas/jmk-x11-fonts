@@ -1,0 +1,446 @@
+XCOMM Imakefile: description of how to build and install `jmk' fonts
+XCOMM created 1998-08-31 Jim Knoble <jmknoble@pobox.com>
+XCOMM autodate: 1999-Aug-20 03:57
+
+XCOMM You shouldn't need to modify these values
+VERSION		= 3.0
+FOUNDRY		= jmk
+LSM_DATE	= 99AUG20
+TARBALL_SIZE	= 608kB
+
+XCOMM - Create a Makefile using:  xmkmf
+XCOMM - Build using:              make
+XCOMM - Install using:            make install
+XCOMM - If you don't want to install into the X11 font tree,
+XCOMM   either modify the value below or use:
+XCOMM                             make INSTALL_DIR="/insert/dir/here"
+XCOMM 
+INSTALL_DIR	= $(FONTDIR)/$(FOUNDRY)
+
+XCOMM ----------------------------------------------------------------
+XCOMM You ought not to modify anything below this point.
+
+CAT		= cat
+CP		= cp -df
+GZIP		= gzip
+MKDIR		= mkdir -p
+MV		= mv -f
+RM		= rm -f
+SED		= sed
+TAR		= tar
+
+PROJECT		= $(FOUNDRY)-x11-fonts
+BACKUP_SUFFIX	= ~
+TARBALL_DIR	= $(PROJECT)-$(VERSION)
+TARBALL		= $(PROJECT)-$(VERSION).tar.gz
+
+LSM_SRC		= $(PROJECT).lsm.sed
+LSM_OBJ		= $(PROJECT)-$(VERSION).lsm
+
+SPECFILE_SRC	= $(PROJECT).spec.sed
+SPECFILE_OBJ	= $(PROJECT).spec
+
+EXTRA_DIRS = \@@\
+ modd \@@\
+ modd/ascii \@@\
+ modd/iso8859-1-parts \@@\
+ neep \@@\
+ neep/ascii \@@\
+ neep/fragments \@@\
+ neep/iso8859-1-parts \@@\
+ neep/iso8859-2-parts \@@\
+ neep/iso8859-9-parts \@@\
+ neep/iso8859-15-parts
+
+EXTRA_SRCS = \@@\
+ Imakefile \@@\
+ ChangeLog \@@\
+ NEWS \@@\
+ README \@@\
+ bdfchardesc.sh \@@\
+ cat-bdf-fonts.sh \@@\
+ descriptions.iso8859-1.tbl \@@\
+ descriptions.iso8859-2.tbl \@@\
+ descriptions.iso8859-9.tbl \@@\
+ descriptions.iso8859-15.tbl \@@\
+ fonts.alias \@@\
+ $(LSM_SRC) \@@\
+ $(LSM_OBJ) \@@\
+ $(SPECFILE_SRC) \@@\
+ $(SPECFILE_OBJ) \@@\
+
+SRCS = \@@\
+ FontSrc(modd-iso8859-1-06x11) \@@\
+ FontSrc(modd-iso8859-1-06x11-bold) \@@\
+ FontSrc(modd-iso8859-1-06x13) \@@\
+ FontSrc(modd-iso8859-1-06x13-bold) \@@\
+ FontSrc(neep-iso8859-1-05x10) \@@\
+ FontSrc(neep-iso8859-1-05x11) \@@\
+ FontSrc(neep-iso8859-1-05x11-bold) \@@\
+ FontSrc(neep-iso8859-1-06x11) \@@\
+ FontSrc(neep-iso8859-1-06x11-bold) \@@\
+ FontSrc(neep-iso8859-1-06x13) \@@\
+ FontSrc(neep-iso8859-1-06x13-bold) \@@\
+ FontSrc(neep-iso8859-1-08x15) \@@\
+ FontSrc(neep-iso8859-1-08x15-bold) \@@\
+ FontSrc(neep-iso8859-1-10x20) \@@\
+ FontSrc(neep-iso8859-1-10x20-bold) \@@\
+ FontSrc(neep-iso8859-1-12x24) \@@\
+ FontSrc(neep-iso8859-1-12x24-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-05x10) \@@\
+ FontSrc(neep-alt-iso8859-1-05x11) \@@\
+ FontSrc(neep-alt-iso8859-1-05x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-06x11) \@@\
+ FontSrc(neep-alt-iso8859-1-06x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-06x13) \@@\
+ FontSrc(neep-alt-iso8859-1-06x13-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-08x15) \@@\
+ FontSrc(neep-alt-iso8859-1-08x15-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-10x20) \@@\
+ FontSrc(neep-alt-iso8859-1-10x20-bold) \@@\
+ FontSrc(neep-alt-iso8859-1-12x24) \@@\
+ FontSrc(neep-alt-iso8859-1-12x24-bold) \@@\
+ FontSrc(neep-iso8859-2-05x10) \@@\
+ FontSrc(neep-iso8859-2-05x11) \@@\
+ FontSrc(neep-iso8859-2-05x11-bold) \@@\
+ FontSrc(neep-iso8859-2-06x11) \@@\
+ FontSrc(neep-iso8859-2-06x11-bold) \@@\
+ FontSrc(neep-iso8859-2-06x13) \@@\
+ FontSrc(neep-iso8859-2-06x13-bold) \@@\
+ FontSrc(neep-iso8859-2-08x15) \@@\
+ FontSrc(neep-iso8859-2-08x15-bold) \@@\
+ FontSrc(neep-iso8859-2-10x20) \@@\
+ FontSrc(neep-iso8859-2-10x20-bold) \@@\
+ FontSrc(neep-iso8859-2-12x24) \@@\
+ FontSrc(neep-iso8859-2-12x24-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-05x10) \@@\
+ FontSrc(neep-alt-iso8859-2-05x11) \@@\
+ FontSrc(neep-alt-iso8859-2-05x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-06x11) \@@\
+ FontSrc(neep-alt-iso8859-2-06x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-06x13) \@@\
+ FontSrc(neep-alt-iso8859-2-06x13-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-08x15) \@@\
+ FontSrc(neep-alt-iso8859-2-08x15-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-10x20) \@@\
+ FontSrc(neep-alt-iso8859-2-10x20-bold) \@@\
+ FontSrc(neep-alt-iso8859-2-12x24) \@@\
+ FontSrc(neep-alt-iso8859-2-12x24-bold) \@@\
+ FontSrc(neep-iso8859-9-05x10) \@@\
+ FontSrc(neep-iso8859-9-05x11) \@@\
+ FontSrc(neep-iso8859-9-05x11-bold) \@@\
+ FontSrc(neep-iso8859-9-06x11) \@@\
+ FontSrc(neep-iso8859-9-06x11-bold) \@@\
+ FontSrc(neep-iso8859-9-06x13) \@@\
+ FontSrc(neep-iso8859-9-06x13-bold) \@@\
+ FontSrc(neep-iso8859-9-08x15) \@@\
+ FontSrc(neep-iso8859-9-08x15-bold) \@@\
+ FontSrc(neep-iso8859-9-10x20) \@@\
+ FontSrc(neep-iso8859-9-10x20-bold) \@@\
+ FontSrc(neep-iso8859-9-12x24) \@@\
+ FontSrc(neep-iso8859-9-12x24-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-05x10) \@@\
+ FontSrc(neep-alt-iso8859-9-05x11) \@@\
+ FontSrc(neep-alt-iso8859-9-05x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-06x11) \@@\
+ FontSrc(neep-alt-iso8859-9-06x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-06x13) \@@\
+ FontSrc(neep-alt-iso8859-9-06x13-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-08x15) \@@\
+ FontSrc(neep-alt-iso8859-9-08x15-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-10x20) \@@\
+ FontSrc(neep-alt-iso8859-9-10x20-bold) \@@\
+ FontSrc(neep-alt-iso8859-9-12x24) \@@\
+ FontSrc(neep-alt-iso8859-9-12x24-bold) \@@\
+ FontSrc(neep-iso8859-15-05x10) \@@\
+ FontSrc(neep-iso8859-15-05x11) \@@\
+ FontSrc(neep-iso8859-15-05x11-bold) \@@\
+ FontSrc(neep-iso8859-15-06x11) \@@\
+ FontSrc(neep-iso8859-15-06x11-bold) \@@\
+ FontSrc(neep-iso8859-15-06x13) \@@\
+ FontSrc(neep-iso8859-15-06x13-bold) \@@\
+ FontSrc(neep-iso8859-15-08x15) \@@\
+ FontSrc(neep-iso8859-15-08x15-bold) \@@\
+ FontSrc(neep-iso8859-15-10x20) \@@\
+ FontSrc(neep-iso8859-15-10x20-bold) \@@\
+ FontSrc(neep-iso8859-15-12x24) \@@\
+ FontSrc(neep-iso8859-15-12x24-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-05x10) \@@\
+ FontSrc(neep-alt-iso8859-15-05x11) \@@\
+ FontSrc(neep-alt-iso8859-15-05x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-06x11) \@@\
+ FontSrc(neep-alt-iso8859-15-06x11-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-06x13) \@@\
+ FontSrc(neep-alt-iso8859-15-06x13-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-08x15) \@@\
+ FontSrc(neep-alt-iso8859-15-08x15-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-10x20) \@@\
+ FontSrc(neep-alt-iso8859-15-10x20-bold) \@@\
+ FontSrc(neep-alt-iso8859-15-12x24) \@@\
+ FontSrc(neep-alt-iso8859-15-12x24-bold)
+
+OBJS = \@@\
+ FontObj(modd-iso8859-1-06x11) \@@\
+ FontObj(modd-iso8859-1-06x11-bold) \@@\
+ FontObj(modd-iso8859-1-06x13) \@@\
+ FontObj(modd-iso8859-1-06x13-bold) \@@\
+ FontObj(neep-iso8859-1-05x10) \@@\
+ FontObj(neep-iso8859-1-05x11) \@@\
+ FontObj(neep-iso8859-1-05x11-bold) \@@\
+ FontObj(neep-iso8859-1-06x11) \@@\
+ FontObj(neep-iso8859-1-06x11-bold) \@@\
+ FontObj(neep-iso8859-1-06x13) \@@\
+ FontObj(neep-iso8859-1-06x13-bold) \@@\
+ FontObj(neep-iso8859-1-08x15) \@@\
+ FontObj(neep-iso8859-1-08x15-bold) \@@\
+ FontObj(neep-iso8859-1-10x20) \@@\
+ FontObj(neep-iso8859-1-10x20-bold) \@@\
+ FontObj(neep-iso8859-1-12x24) \@@\
+ FontObj(neep-iso8859-1-12x24-bold) \@@\
+ FontObj(neep-alt-iso8859-1-05x10) \@@\
+ FontObj(neep-alt-iso8859-1-05x11) \@@\
+ FontObj(neep-alt-iso8859-1-05x11-bold) \@@\
+ FontObj(neep-alt-iso8859-1-06x11) \@@\
+ FontObj(neep-alt-iso8859-1-06x11-bold) \@@\
+ FontObj(neep-alt-iso8859-1-06x13) \@@\
+ FontObj(neep-alt-iso8859-1-06x13-bold) \@@\
+ FontObj(neep-alt-iso8859-1-08x15) \@@\
+ FontObj(neep-alt-iso8859-1-08x15-bold) \@@\
+ FontObj(neep-alt-iso8859-1-10x20) \@@\
+ FontObj(neep-alt-iso8859-1-10x20-bold) \@@\
+ FontObj(neep-alt-iso8859-1-12x24) \@@\
+ FontObj(neep-alt-iso8859-1-12x24-bold) \@@\
+ FontObj(neep-iso8859-2-05x10) \@@\
+ FontObj(neep-iso8859-2-05x11) \@@\
+ FontObj(neep-iso8859-2-05x11-bold) \@@\
+ FontObj(neep-iso8859-2-06x11) \@@\
+ FontObj(neep-iso8859-2-06x11-bold) \@@\
+ FontObj(neep-iso8859-2-06x13) \@@\
+ FontObj(neep-iso8859-2-06x13-bold) \@@\
+ FontObj(neep-iso8859-2-08x15) \@@\
+ FontObj(neep-iso8859-2-08x15-bold) \@@\
+ FontObj(neep-iso8859-2-10x20) \@@\
+ FontObj(neep-iso8859-2-10x20-bold) \@@\
+ FontObj(neep-iso8859-2-12x24) \@@\
+ FontObj(neep-iso8859-2-12x24-bold) \@@\
+ FontObj(neep-alt-iso8859-2-05x10) \@@\
+ FontObj(neep-alt-iso8859-2-05x11) \@@\
+ FontObj(neep-alt-iso8859-2-05x11-bold) \@@\
+ FontObj(neep-alt-iso8859-2-06x11) \@@\
+ FontObj(neep-alt-iso8859-2-06x11-bold) \@@\
+ FontObj(neep-alt-iso8859-2-06x13) \@@\
+ FontObj(neep-alt-iso8859-2-06x13-bold) \@@\
+ FontObj(neep-alt-iso8859-2-08x15) \@@\
+ FontObj(neep-alt-iso8859-2-08x15-bold) \@@\
+ FontObj(neep-alt-iso8859-2-10x20) \@@\
+ FontObj(neep-alt-iso8859-2-10x20-bold) \@@\
+ FontObj(neep-alt-iso8859-2-12x24) \@@\
+ FontObj(neep-alt-iso8859-2-12x24-bold) \@@\
+ FontObj(neep-iso8859-9-05x10) \@@\
+ FontObj(neep-iso8859-9-05x11) \@@\
+ FontObj(neep-iso8859-9-05x11-bold) \@@\
+ FontObj(neep-iso8859-9-06x11) \@@\
+ FontObj(neep-iso8859-9-06x11-bold) \@@\
+ FontObj(neep-iso8859-9-06x13) \@@\
+ FontObj(neep-iso8859-9-06x13-bold) \@@\
+ FontObj(neep-iso8859-9-08x15) \@@\
+ FontObj(neep-iso8859-9-08x15-bold) \@@\
+ FontObj(neep-iso8859-9-10x20) \@@\
+ FontObj(neep-iso8859-9-10x20-bold) \@@\
+ FontObj(neep-iso8859-9-12x24) \@@\
+ FontObj(neep-iso8859-9-12x24-bold) \@@\
+ FontObj(neep-alt-iso8859-9-05x10) \@@\
+ FontObj(neep-alt-iso8859-9-05x11) \@@\
+ FontObj(neep-alt-iso8859-9-05x11-bold) \@@\
+ FontObj(neep-alt-iso8859-9-06x11) \@@\
+ FontObj(neep-alt-iso8859-9-06x11-bold) \@@\
+ FontObj(neep-alt-iso8859-9-06x13) \@@\
+ FontObj(neep-alt-iso8859-9-06x13-bold) \@@\
+ FontObj(neep-alt-iso8859-9-08x15) \@@\
+ FontObj(neep-alt-iso8859-9-08x15-bold) \@@\
+ FontObj(neep-alt-iso8859-9-10x20) \@@\
+ FontObj(neep-alt-iso8859-9-10x20-bold) \@@\
+ FontObj(neep-alt-iso8859-9-12x24) \@@\
+ FontObj(neep-alt-iso8859-9-12x24-bold) \@@\
+ FontObj(neep-iso8859-15-05x10) \@@\
+ FontObj(neep-iso8859-15-05x11) \@@\
+ FontObj(neep-iso8859-15-05x11-bold) \@@\
+ FontObj(neep-iso8859-15-06x11) \@@\
+ FontObj(neep-iso8859-15-06x11-bold) \@@\
+ FontObj(neep-iso8859-15-06x13) \@@\
+ FontObj(neep-iso8859-15-06x13-bold) \@@\
+ FontObj(neep-iso8859-15-08x15) \@@\
+ FontObj(neep-iso8859-15-08x15-bold) \@@\
+ FontObj(neep-iso8859-15-10x20) \@@\
+ FontObj(neep-iso8859-15-10x20-bold) \@@\
+ FontObj(neep-iso8859-15-12x24) \@@\
+ FontObj(neep-iso8859-15-12x24-bold) \@@\
+ FontObj(neep-alt-iso8859-15-05x10) \@@\
+ FontObj(neep-alt-iso8859-15-05x11) \@@\
+ FontObj(neep-alt-iso8859-15-05x11-bold) \@@\
+ FontObj(neep-alt-iso8859-15-06x11) \@@\
+ FontObj(neep-alt-iso8859-15-06x11-bold) \@@\
+ FontObj(neep-alt-iso8859-15-06x13) \@@\
+ FontObj(neep-alt-iso8859-15-06x13-bold) \@@\
+ FontObj(neep-alt-iso8859-15-08x15) \@@\
+ FontObj(neep-alt-iso8859-15-08x15-bold) \@@\
+ FontObj(neep-alt-iso8859-15-10x20) \@@\
+ FontObj(neep-alt-iso8859-15-10x20-bold) \@@\
+ FontObj(neep-alt-iso8859-15-12x24) \@@\
+ FontObj(neep-alt-iso8859-15-12x24-bold)
+
+MakeFonts()
+
+FontTarget(modd-iso8859-1-06x11)
+FontTarget(modd-iso8859-1-06x11-bold)
+FontTarget(modd-iso8859-1-06x13)
+FontTarget(modd-iso8859-1-06x13-bold)
+FontTarget(neep-iso8859-1-05x10)
+FontTarget(neep-iso8859-1-05x11)
+FontTarget(neep-iso8859-1-05x11-bold)
+FontTarget(neep-iso8859-1-06x11)
+FontTarget(neep-iso8859-1-06x11-bold)
+FontTarget(neep-iso8859-1-06x13)
+FontTarget(neep-iso8859-1-06x13-bold)
+FontTarget(neep-iso8859-1-08x15)
+FontTarget(neep-iso8859-1-08x15-bold)
+FontTarget(neep-iso8859-1-10x20)
+FontTarget(neep-iso8859-1-10x20-bold)
+FontTarget(neep-iso8859-1-12x24)
+FontTarget(neep-iso8859-1-12x24-bold)
+FontTarget(neep-alt-iso8859-1-05x10)
+FontTarget(neep-alt-iso8859-1-05x11)
+FontTarget(neep-alt-iso8859-1-05x11-bold)
+FontTarget(neep-alt-iso8859-1-06x11)
+FontTarget(neep-alt-iso8859-1-06x11-bold)
+FontTarget(neep-alt-iso8859-1-06x13)
+FontTarget(neep-alt-iso8859-1-06x13-bold)
+FontTarget(neep-alt-iso8859-1-08x15)
+FontTarget(neep-alt-iso8859-1-08x15-bold)
+FontTarget(neep-alt-iso8859-1-10x20)
+FontTarget(neep-alt-iso8859-1-10x20-bold)
+FontTarget(neep-alt-iso8859-1-12x24)
+FontTarget(neep-alt-iso8859-1-12x24-bold)
+FontTarget(neep-iso8859-2-05x10)
+FontTarget(neep-iso8859-2-05x11)
+FontTarget(neep-iso8859-2-05x11-bold)
+FontTarget(neep-iso8859-2-06x11)
+FontTarget(neep-iso8859-2-06x11-bold)
+FontTarget(neep-iso8859-2-06x13)
+FontTarget(neep-iso8859-2-06x13-bold)
+FontTarget(neep-iso8859-2-08x15)
+FontTarget(neep-iso8859-2-08x15-bold)
+FontTarget(neep-iso8859-2-10x20)
+FontTarget(neep-iso8859-2-10x20-bold)
+FontTarget(neep-iso8859-2-12x24)
+FontTarget(neep-iso8859-2-12x24-bold)
+FontTarget(neep-alt-iso8859-2-05x10)
+FontTarget(neep-alt-iso8859-2-05x11)
+FontTarget(neep-alt-iso8859-2-05x11-bold)
+FontTarget(neep-alt-iso8859-2-06x11)
+FontTarget(neep-alt-iso8859-2-06x11-bold)
+FontTarget(neep-alt-iso8859-2-06x13)
+FontTarget(neep-alt-iso8859-2-06x13-bold)
+FontTarget(neep-alt-iso8859-2-08x15)
+FontTarget(neep-alt-iso8859-2-08x15-bold)
+FontTarget(neep-alt-iso8859-2-10x20)
+FontTarget(neep-alt-iso8859-2-10x20-bold)
+FontTarget(neep-alt-iso8859-2-12x24)
+FontTarget(neep-alt-iso8859-2-12x24-bold)
+FontTarget(neep-iso8859-9-05x10)
+FontTarget(neep-iso8859-9-05x11)
+FontTarget(neep-iso8859-9-05x11-bold)
+FontTarget(neep-iso8859-9-06x11)
+FontTarget(neep-iso8859-9-06x11-bold)
+FontTarget(neep-iso8859-9-06x13)
+FontTarget(neep-iso8859-9-06x13-bold)
+FontTarget(neep-iso8859-9-08x15)
+FontTarget(neep-iso8859-9-08x15-bold)
+FontTarget(neep-iso8859-9-10x20)
+FontTarget(neep-iso8859-9-10x20-bold)
+FontTarget(neep-iso8859-9-12x24)
+FontTarget(neep-iso8859-9-12x24-bold)
+FontTarget(neep-alt-iso8859-9-05x10)
+FontTarget(neep-alt-iso8859-9-05x11)
+FontTarget(neep-alt-iso8859-9-05x11-bold)
+FontTarget(neep-alt-iso8859-9-06x11)
+FontTarget(neep-alt-iso8859-9-06x11-bold)
+FontTarget(neep-alt-iso8859-9-06x13)
+FontTarget(neep-alt-iso8859-9-06x13-bold)
+FontTarget(neep-alt-iso8859-9-08x15)
+FontTarget(neep-alt-iso8859-9-08x15-bold)
+FontTarget(neep-alt-iso8859-9-10x20)
+FontTarget(neep-alt-iso8859-9-10x20-bold)
+FontTarget(neep-alt-iso8859-9-12x24)
+FontTarget(neep-alt-iso8859-9-12x24-bold)
+FontTarget(neep-iso8859-15-05x10)
+FontTarget(neep-iso8859-15-05x11)
+FontTarget(neep-iso8859-15-05x11-bold)
+FontTarget(neep-iso8859-15-06x11)
+FontTarget(neep-iso8859-15-06x11-bold)
+FontTarget(neep-iso8859-15-06x13)
+FontTarget(neep-iso8859-15-06x13-bold)
+FontTarget(neep-iso8859-15-08x15)
+FontTarget(neep-iso8859-15-08x15-bold)
+FontTarget(neep-iso8859-15-10x20)
+FontTarget(neep-iso8859-15-10x20-bold)
+FontTarget(neep-iso8859-15-12x24)
+FontTarget(neep-iso8859-15-12x24-bold)
+FontTarget(neep-alt-iso8859-15-05x10)
+FontTarget(neep-alt-iso8859-15-05x11)
+FontTarget(neep-alt-iso8859-15-05x11-bold)
+FontTarget(neep-alt-iso8859-15-06x11)
+FontTarget(neep-alt-iso8859-15-06x11-bold)
+FontTarget(neep-alt-iso8859-15-06x13)
+FontTarget(neep-alt-iso8859-15-06x13-bold)
+FontTarget(neep-alt-iso8859-15-08x15)
+FontTarget(neep-alt-iso8859-15-08x15-bold)
+FontTarget(neep-alt-iso8859-15-10x20)
+FontTarget(neep-alt-iso8859-15-10x20-bold)
+FontTarget(neep-alt-iso8859-15-12x24)
+FontTarget(neep-alt-iso8859-15-12x24-bold)
+
+InstallFonts($(INSTALL_DIR))
+InstallFontAliases($(INSTALL_DIR))
+
+.PHONY: sed tar
+
+sed: $(LSM_OBJ) $(SPECFILE_OBJ)
+
+$(LSM_OBJ): $(LSM_SRC)
+	-$(RM) $(LSM_OBJ)
+	$(CAT) $(LSM_SRC) | $(SED) \@@\
+		-e 's:@Name@:$(PROJECT):g' \@@\
+		-e 's:@Version@:$(VERSION):g' \@@\
+		-e 's:@Date@:$(LSM_DATE):g' \@@\
+		-e 's:@Size@:$(TARBALL_SIZE):g' \@@\
+		>$(LSM_OBJ)
+
+$(SPECFILE_OBJ): $(SPECFILE_SRC)
+	-$(RM) $(SPECFILE_OBJ)
+	$(CAT) $(SPECFILE_SRC) | $(SED) \@@\
+		-e 's:@Name@:$(PROJECT):g' \@@\
+		-e 's:@Version@:$(VERSION):g' \@@\
+		-e 's:@FoundryDir@:$(FOUNDRY):g' \@@\
+		>$(SPECFILE_OBJ)
+
+tar:
+	-$(RM) -r $(TARBALL_DIR)
+	$(MKDIR) $(TARBALL_DIR)
+	$(CP) $(EXTRA_SRCS) $(SRCS) $(TARBALL_DIR)
+	for i in $(EXTRA_DIRS); do \@@\
+		$(MKDIR) $(TARBALL_DIR)/$${i}; \@@\
+		for j in $${i}//**/*; do \@@\
+			if [ ! -d $${j} ]; then \@@\
+				$(CP) $${j} $(TARBALL_DIR)/$${i}/; \@@\
+			fi; \@@\
+		done; \@@\
+	done
+	-$(RM) $(TARBALL)$(BACKUP_SUFFIX)
+	-$(MV) $(TARBALL) $(TARBALL)$(BACKUP_SUFFIX)
+	$(TAR) -cvf - $(TARBALL_DIR) | $(GZIP) -9 -c >$(TARBALL)
+	-$(RM) -r $(TARBALL_DIR)
+
+clean::
+	-$(RM) $(SPECFILE_OBJ) $(LSM_OBJ)
+

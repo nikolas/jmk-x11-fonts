@@ -1,0 +1,118 @@
+# NEWS:  Important information for experienced users of jmk-x11-fonts.
+# created 1999-Aug-17 02:43 jmk -*- text -*-
+# autodate: 1999-Aug-20 03:58
+
++---------------------------+
+| Version 3.0 (1999-Aug-20) |
++---------------------------+
+
+  1. `AltGlyph' ADD_STYLE changes to +` Alt' in FAMILY_NAME.
+
+  Quite a few X applications (notably Gimp and Netscape) pay no
+  attention whatsoever to the ADD_STYLE font field.  I consider that
+  broken behavior.  Unfortunately, to work around that, i've had to
+  abandon use of the ADD_STYLE field to indicate the font variants with
+  alternate ampersand glyphs.  With version 3.0, the regular variants
+  have a FAMILY_NAME of `Neep', and the alternate variants have a
+  FAMILY_NAME of `Neep Alt'.
+
+  Unfortunately, this means a slightly incompatible change for folks
+  who use the alternate variants.  Sorry about that; complain to the
+  folks who write broken applications that don't handle the ADD_STYLE
+  field.
+
+  The OLD name for the Neep font variants with alternate glyphs is (for
+  example):
+
+    -jmk-Neep-Medium-R-*-AltGlyph-*-120-*-*-*-*-ISO8859-1
+                       /^^^^^^^^^^
+                [This goes away ...]
+
+  The NEW name for the same font is:
+
+    -jmk-Neep Alt-Medium-R-*--*-120-*-*-*-*-ISO8859-1
+             ^^^^\
+                [... and this appears in its place.]
+
+  (Remember that X11 font names are not case sensitive.)
+
+
+  How This Change Affects Installation
+  ------------------------------------
+
+  If you are installing on top of a previous release of jmk-x11-fonts,
+  you need to follow step [3a] of the installation instructions
+  (reproduced here):
+
+    : (3a) If you're upgrading from a prior release, move the old `jmk'
+    :      font directory out of the way before installing:
+    :      
+    :         mv FONTDIR/jmk/ FONTDIR/jmk.old/
+    : 
+    :     (where FONTDIR is the directory under which you installed the
+    :     prior release of these fonts).
+
+  Bad things may happen to you if you don't do this.
+    
+
+  How This Change Affects the User
+  --------------------------------
+
+  Once you have properly installed jmk-x11-fonts, this change should
+  only affect you if you satisfy the following conditions:
+
+  (1) You use the Neep font variants containting the alternate
+      ampersand (`&') glyphs; AND
+
+  (2a) You use the full X11 font name to refer to the fonts instead of
+       using the aliases provided in the fonts.alias file included with
+       the jmk-x11-fonts package;
+
+       OR
+
+  (2b) You use the aliases from fonts.alias which include the encoding
+       (for example, `neep-iso8859-1-alt-12') instead of the ones that
+       don't (`neep-alt-12').
+
+  If you use the full font names to refer to the Neep fonts, simply
+  change the font references as shown above.
+
+  If you use the longer aliases to refer to the Neep fonts, you'll need
+  to change the alias names slightly.
+
+  The OLD aliases for the Neep font variants with alternate glyhps is
+  (for example):
+
+    neep-iso8859-2-alt-bold-14
+                 /^^^^
+            [This ...]
+	
+    neep-alt-iso8859-2-bold-14
+        ^^^^\
+            [... moves over here.]
+
+  I highly recommend setting up the shorter aliases to point to the
+  encodings you use most frequently in the fonts.alias file before
+  installing.  Doing so will avoid such name-changing problems in the
+  future.
+  
+  
+  2. Experimental `13-point' size leaves Neep family.
+
+  With release 3.0, the pseudo-13-point (6x14) size of the Neep font
+  family ends its short life.  This is the one that looks almost just
+  like the 12-point size, but with slightly increased room for
+  diacritical marks.  I didn't receive enough positive feedback about
+  this font to warrant the effort of maintaining it; it's significantly
+  more trouble to maintain a font size that's very similar to another
+  font size than it is to maintain one that's markedly different.
+
+  If you liked and used the 13-point size, this change will affect you.
+  You can continue using that size in all its encodings, but you may
+  need to add it to the font directory and to the fonts.alias file by
+  hand after installing new releases of jmk-x11-fonts.  If you really
+  really want to continue using it, you might find it easier to put all
+  of the 13-point encodings into a separate font directory, with its
+  own fonts.alias and fonts.dir files.
+
+-------- End of document --------

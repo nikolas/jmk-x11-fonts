@@ -1,0 +1,212 @@
+## Makefile.neep: how to build the neep BDF fonts from
+##                their various parts and make them installable
+## created 1998-10-12 jmk
+## autodate: 1999-Aug-19 01:06
+
+## NOTE:  This Makefile requires GNU make.
+
+SHELL=/bin/sh
+
+CP		= cp -f
+CAT		= cat
+ECHO		= echo
+ECHON		= echo -n
+ECHONE		= echo -ne
+RM		= rm -f
+SED		= sed
+TOUCH		= touch
+
+MAKEFILE_FONTS		= Makefile.fonts
+MAKEFILE_FONTS_IN	= $(MAKEFILE_FONTS).in
+
+ASCII_DIR	= ascii
+FRAG_DIR	= fragments
+ISO8859_1_DIR	= iso8859-1-parts
+ISO8859_2_DIR	= iso8859-2-parts
+ISO8859_9_DIR	= iso8859-9-parts
+ISO8859_15_DIR	= iso8859-15-parts
+FONT_DIR	= .
+UTIL_DIR	= ..
+INSTALL_SRC_DIR	= ..
+
+CAT_FONTS	= $(UTIL_DIR)/cat-bdf-fonts.sh
+
+FONT		= neep
+FONT_ALT	= $(FONT)-alt
+
+ADDSTYLE_REG	= -n 'Neep' -a ''
+ADDSTYLE_ALT	= -n 'Neep Alt' -a ''
+ENC_ASCII	= -r US -e ASCII
+ENC_ISO8859_1	= -r ISO8859 -e 1
+ENC_ISO8859_2	= -r ISO8859 -e 2
+ENC_ISO8859_9	= -r ISO8859 -e 9
+ENC_ISO8859_15	= -r ISO8859 -e 15
+
+SIZES		= \
+ 05x10 \
+ 05x11 \
+ 05x11-bold \
+ 06x11 \
+ 06x11-bold \
+ 06x13 \
+ 06x13-bold \
+ 08x15 \
+ 08x15-bold \
+ 10x20 \
+ 10x20-bold \
+ 12x24 \
+ 12x24-bold
+
+ASCII_PARTS	= \
+ $(FRAG_DIR)/$(FONT)-pre-ampersand-@SIZE@.bdf \
+ $(FRAG_DIR)/$(FONT)-ampersand-@SIZE@.bdf \
+ $(FRAG_DIR)/$(FONT)-post-ampersand-@SIZE@.bdf
+
+ASCII_PARTS_ALT	= \
+ $(FRAG_DIR)/$(FONT)-pre-ampersand-@SIZE@.bdf \
+ $(FRAG_DIR)/$(FONT)-ampersand-alt-@SIZE@.bdf \
+ $(FRAG_DIR)/$(FONT)-post-ampersand-@SIZE@.bdf
+
+ASCII_FONT	= \
+ $(ASCII_DIR)/$(FONT)-ascii-@SIZE@.bdf
+
+ASCII_FONT_ALT	= \
+ $(ASCII_DIR)/$(FONT_ALT)-ascii-@SIZE@.bdf
+
+ISO8859_1_PARTS	= \
+ $(ISO8859_1_DIR)/$(FONT)-iso8859-1-part-@SIZE@.bdf
+
+ISO8859_1_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-1-@SIZE@.bdf
+
+ISO8859_1_FONT_ALT	= \
+ $(FONT_DIR)/$(FONT_ALT)-iso8859-1-@SIZE@.bdf
+
+ISO8859_2_PARTS	= \
+ $(ISO8859_2_DIR)/$(FONT)-iso8859-2-part-@SIZE@.bdf
+
+ISO8859_2_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-2-@SIZE@.bdf
+
+ISO8859_2_FONT_ALT	= \
+ $(FONT_DIR)/$(FONT_ALT)-iso8859-2-@SIZE@.bdf
+
+ISO8859_9_PARTS	= \
+ $(ISO8859_9_DIR)/$(FONT)-iso8859-9-part-@SIZE@.bdf
+
+ISO8859_9_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-9-@SIZE@.bdf
+
+ISO8859_9_FONT_ALT	= \
+ $(FONT_DIR)/$(FONT_ALT)-iso8859-9-@SIZE@.bdf
+
+ISO8859_15_PARTS	= \
+ $(ISO8859_15_DIR)/$(FONT)-iso8859-15-part-@SIZE@.bdf
+
+ISO8859_15_FONT	= \
+ $(FONT_DIR)/$(FONT)-iso8859-15-@SIZE@.bdf
+
+ISO8859_15_FONT_ALT	= \
+ $(FONT_DIR)/$(FONT_ALT)-iso8859-15-@SIZE@.bdf
+
+ASCII_FONTS	=#
+ISO8859_1_FONTS	=#
+ISO8859_2_FONTS	=#
+ISO8859_9_FONTS	=#
+ISO8859_15_FONTS	=#
+
+.PHONY: default makefiles Makefiles depend clean realclean
+.PHONY: ascii iso8859-1 iso8859-2 iso8859-9 iso8859-15 fonts
+
+default: makefiles
+	$(MAKE) fonts
+	$(MAKE) install
+
+makefiles:
+	$(CAT) /dev/null >$(MAKEFILE_FONTS)
+	$(ECHON) 'ASCII_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ASCII_FONT) $(ASCII_FONT_ALT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_1_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_1_FONT) $(ISO8859_1_FONT_ALT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_2_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_2_FONT) $(ISO8859_2_FONT_ALT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_9_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_9_FONT) $(ISO8859_9_FONT_ALT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	$(ECHON) 'ISO8859_15_FONTS = ' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(ECHON) '$(ISO8859_15_FONT) $(ISO8859_15_FONT_ALT) ' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	$(ECHONE) '\n\n' >>$(MAKEFILE_FONTS)
+	for i in $(SIZES); do \
+		$(CAT) $(MAKEFILE_FONTS_IN) \
+		| $(SED) -e 's~@ASCII_FONT@~$(ASCII_FONT)~g' \
+			-e 's~@ASCII_FONT_ALT@~$(ASCII_FONT_ALT)~g' \
+			-e 's~@ISO8859_1_FONT@~$(ISO8859_1_FONT)~g' \
+			-e 's~@ISO8859_1_FONT_ALT@~$(ISO8859_1_FONT_ALT)~g' \
+			-e 's~@ISO8859_1_PARTS@~$(ISO8859_1_PARTS)~g' \
+			-e 's~@ISO8859_2_FONT@~$(ISO8859_2_FONT)~g' \
+			-e 's~@ISO8859_2_FONT_ALT@~$(ISO8859_2_FONT_ALT)~g' \
+			-e 's~@ISO8859_2_PARTS@~$(ISO8859_2_PARTS)~g' \
+			-e 's~@ISO8859_9_FONT@~$(ISO8859_9_FONT)~g' \
+			-e 's~@ISO8859_9_FONT_ALT@~$(ISO8859_9_FONT_ALT)~g' \
+			-e 's~@ISO8859_9_PARTS@~$(ISO8859_9_PARTS)~g' \
+			-e 's~@ISO8859_15_FONT@~$(ISO8859_15_FONT)~g' \
+			-e 's~@ISO8859_15_FONT_ALT@~$(ISO8859_15_FONT_ALT)~g' \
+			-e 's~@ISO8859_15_PARTS@~$(ISO8859_15_PARTS)~g' \
+			-e 's~@ASCII_PARTS@~$(ASCII_PARTS)~g' \
+			-e 's~@ASCII_PARTS_ALT@~$(ASCII_PARTS_ALT)~g' \
+		| $(SED) -e "s/@SIZE@/$${i}/g" >>$(MAKEFILE_FONTS); \
+	done
+	
+Makefiles: makefiles
+
+$(MAKEFILE_FONTS):
+	$(TOUCH) $@
+
+include $(MAKEFILE_FONTS)
+
+ascii: $(ASCII_FONTS)
+
+iso8859-1: $(ISO8859_1_FONTS)
+
+iso8859-2: $(ISO8859_2_FONTS)
+
+iso8859-9: $(ISO8859_9_FONTS)
+
+iso8859-15: $(ISO8859_15_FONTS)
+
+fonts: iso8859-1 iso8859-2 iso8859-9 iso8859-15
+
+INSTALL_SRC_FONTS = \
+ $(ISO8859_1_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%) \
+ $(ISO8859_2_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%) \
+ $(ISO8859_9_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%) \
+ $(ISO8859_15_FONTS:$(FONT_DIR)/%=$(INSTALL_SRC_DIR)/%)
+
+install: $(INSTALL_SRC_FONTS)
+	
+$(INSTALL_SRC_DIR)/%: $(FONT_DIR)/%
+	$(CP) $< $@
+
+depend: makefiles
+
+realclean: clean
+	$(RM) $(MAKEFILE_FONTS) *~ make.LOG
+

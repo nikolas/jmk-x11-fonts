@@ -1,0 +1,74 @@
+ASCII_FONTS = ascii/modd-ascii-06x11.bdf ascii/modd-ascii-06x11-bold.bdf ascii/modd-ascii-06x13.bdf ascii/modd-ascii-06x13-bold.bdf 
+
+ISO8859_1_FONTS = ./modd-iso8859-1-06x11.bdf ./modd-iso8859-1-06x11-bold.bdf ./modd-iso8859-1-06x13.bdf ./modd-iso8859-1-06x13-bold.bdf 
+
+ISO8859_2_FONTS = ./modd-iso8859-2-06x11.bdf ./modd-iso8859-2-06x11-bold.bdf ./modd-iso8859-2-06x13.bdf ./modd-iso8859-2-06x13-bold.bdf 
+
+./modd-iso8859-1-06x11.bdf: ascii/modd-ascii-06x11.bdf iso8859-1-parts/modd-iso8859-1-part-06x11.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_1) \
+		ascii/modd-ascii-06x11.bdf \
+		iso8859-1-parts/modd-iso8859-1-part-06x11.bdf
+
+./modd-iso8859-2-06x11.bdf: ascii/modd-ascii-06x11.bdf iso8859-2-parts/modd-iso8859-2-part-06x11.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_2) \
+		ascii/modd-ascii-06x11.bdf \
+		iso8859-2-parts/modd-iso8859-2-part-06x11.bdf
+
+clean::
+	$(RM) \
+		./modd-iso8859-1-06x11.bdf \
+		./modd-iso8859-2-06x11.bdf
+
+./modd-iso8859-1-06x11-bold.bdf: ascii/modd-ascii-06x11-bold.bdf iso8859-1-parts/modd-iso8859-1-part-06x11-bold.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_1) \
+		ascii/modd-ascii-06x11-bold.bdf \
+		iso8859-1-parts/modd-iso8859-1-part-06x11-bold.bdf
+
+./modd-iso8859-2-06x11-bold.bdf: ascii/modd-ascii-06x11-bold.bdf iso8859-2-parts/modd-iso8859-2-part-06x11-bold.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_2) \
+		ascii/modd-ascii-06x11-bold.bdf \
+		iso8859-2-parts/modd-iso8859-2-part-06x11-bold.bdf
+
+clean::
+	$(RM) \
+		./modd-iso8859-1-06x11-bold.bdf \
+		./modd-iso8859-2-06x11-bold.bdf
+
+./modd-iso8859-1-06x13.bdf: ascii/modd-ascii-06x13.bdf iso8859-1-parts/modd-iso8859-1-part-06x13.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_1) \
+		ascii/modd-ascii-06x13.bdf \
+		iso8859-1-parts/modd-iso8859-1-part-06x13.bdf
+
+./modd-iso8859-2-06x13.bdf: ascii/modd-ascii-06x13.bdf iso8859-2-parts/modd-iso8859-2-part-06x13.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_2) \
+		ascii/modd-ascii-06x13.bdf \
+		iso8859-2-parts/modd-iso8859-2-part-06x13.bdf
+
+clean::
+	$(RM) \
+		./modd-iso8859-1-06x13.bdf \
+		./modd-iso8859-2-06x13.bdf
+
+./modd-iso8859-1-06x13-bold.bdf: ascii/modd-ascii-06x13-bold.bdf iso8859-1-parts/modd-iso8859-1-part-06x13-bold.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_1) \
+		ascii/modd-ascii-06x13-bold.bdf \
+		iso8859-1-parts/modd-iso8859-1-part-06x13-bold.bdf
+
+./modd-iso8859-2-06x13-bold.bdf: ascii/modd-ascii-06x13-bold.bdf iso8859-2-parts/modd-iso8859-2-part-06x13-bold.bdf
+	$(CAT_FONTS) -o $@ \
+		$(ADDSTYLE_REG) $(ENC_ISO8859_2) \
+		ascii/modd-ascii-06x13-bold.bdf \
+		iso8859-2-parts/modd-iso8859-2-part-06x13-bold.bdf
+
+clean::
+	$(RM) \
+		./modd-iso8859-1-06x13-bold.bdf \
+		./modd-iso8859-2-06x13-bold.bdf
+

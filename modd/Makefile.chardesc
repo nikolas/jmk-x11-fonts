@@ -1,0 +1,38 @@
+# Makefile.chardesc: update character descriptions for BDF fonts
+# created 1999-01-12 01:14 jmk
+# autodate: 1999-01-12 01:35
+
+SHELL=/bin/sh
+
+MV	= mv -f
+RM	= rm -f
+
+SRC_DIR		= .
+ENC_FILENAME	= Encoding
+ENC_FILE	= $(SRC_DIR)/$(ENC_FILENAME)
+ENCODING	= $(shell cat $(ENC_FILE))
+DESC_TABLE	= descriptions.$(ENCODING).tbl
+
+UTIL_DIR	= ../..
+DESC_UTIL	= $(UTIL_DIR)/bdfchardesc.sh -t $(UTIL_DIR)/$(DESC_TABLE)
+
+SRCS		= $(wildcard $(SRC_DIR)/*-$(ENCODING)-*.bdf)
+OBJS		= $(SRCS:%=%.new)
+BAKS		= $(SRCS:%=%.bak)
+
+describe:
+	@echo "Describing characters for encoding '$(ENCODING)' ..."
+	@if [ -n "$(ENCODING)" ]; then \
+		$(DESC_UTIL) $(SRCS); \
+		for i in $(SRCS); do \
+			if [ -f $${i}.bak ]; then \
+				$(RM) $${i}.bak; \
+			fi; \
+			$(MV) $${i} $${i}.bak; \
+			$(MV) $${i}.new $${i}; \
+		done; \
+	fi
+
+clean:
+	$(RM) $(BAKS) *~
+
