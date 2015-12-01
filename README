@@ -155,6 +155,9 @@ perhaps you feel like figuring out how to use bdftopcf and mkfontdir.
 They each have fine manual pages.  If you don't have manual pages for
 them on your system, complain to your vendor loudly.
 
+On Debian-based Linux distributions, imake can be found in the
+xutils-dev package.
+
 +---------+
 | History |
 +---------+
