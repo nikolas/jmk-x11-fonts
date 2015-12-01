@@ -44,7 +44,9 @@ package are:
     ISO-8859-1 encoding only.
 
 These fonts were created using the xmbdfed BDF font editor
-<ftp://crl.nmsu.edu/CLR/multiling/General/>.
+<ftp://crl.nmsu.edu/CLR/multiling/General/>. xmbdfed is not
+really around anymore, but you can edit these fonts with
+FontForge <https://fontforge.github.io/>.
 
 For more information about fonts and the X Window System, see the X(1)
 man page.
